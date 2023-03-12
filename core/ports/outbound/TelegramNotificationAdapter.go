@@ -32,7 +32,7 @@ func (s *TelegramNotificationAdapter) Notificate(message *domain.Message) (*doma
 
 	body, ioError := io.ReadAll(resp.Body)
 
-	if err != nil {
+	if ioError != nil {
 		err = ioError
 	}
 
