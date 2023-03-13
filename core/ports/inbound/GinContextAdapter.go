@@ -1,6 +1,8 @@
 package ports
 
 import (
+	"errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/igloar96/hexa-notification/core/domain"
 )
@@ -19,5 +21,10 @@ func (s *GinContextAdapter) GetMessage() (*domain.Message, error) {
 	if err := s.ctx.ShouldBindJSON(&message); err != nil {
 		return nil, err
 	}
+
+	if message.Text == "" {
+		return nil, errors.New("text cannot be empty")
+	}
+
 	return &message, nil
 }
