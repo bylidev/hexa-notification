@@ -19,19 +19,13 @@ Hexa Notification is a project focused on providing a customizable and easy-to-u
 
 1.  Clone the repository to your local machine:
 
-bashCopy code
-
 `git clone https://github.com/igloar96/hexa-notification.git` 
 
 2.  Navigate to the project directory:
 
-bashCopy code
-
 `cd hexa-notification` 
 
 3.  Compile the project using Go:
-
-goCopy code
 
 `go build` 
 
@@ -39,9 +33,6 @@ goCopy code
     
 5.  Run the compiled binary:
     
-
-bashCopy code
-
 `./hexa-notification` 
 
 The project should now be up and running and ready to be integrated into your application.
