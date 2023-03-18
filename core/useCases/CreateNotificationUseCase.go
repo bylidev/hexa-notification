@@ -1,8 +1,8 @@
 package useCases
 
-import "github.com/igloar96/hexa-notification/core/domain"
+import "github.com/igloar96/hexa-notification/core/ports"
 
 // Command pattern
 type CreateNotificationUseCase interface {
-	Excecute(message *domain.Message) []error
+	Excecute(driver ports.NotificationDriverAdapter) []error
 }

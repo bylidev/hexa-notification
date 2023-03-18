@@ -2,8 +2,9 @@ package useCases
 
 import (
 	"errors"
+	"fmt"
 
-	domain "github.com/igloar96/hexa-notification/core/domain"
+	"github.com/igloar96/hexa-notification/core/ports"
 	outputPort "github.com/igloar96/hexa-notification/core/ports"
 )
 
@@ -17,8 +18,13 @@ func NewCreateNotification(outboundAdapters *[]outputPort.NotificationDrivenAdap
 	}
 }
 
-func (s *CreateNotification) Excecute(message *domain.Message) []error {
+func (s *CreateNotification) Excecute(driver ports.NotificationDriverAdapter) []error {
 	var errList []error
+	message, err := driver.GetMessage()
+	if err != nil {
+		return append(errList, fmt.Errorf("ERROR WITH NOTIFICATION_DRIVER_ADAPTER DETAILS: %s", err))
+
+	}
 
 	if message.Text == "" {
 		return append(errList, errors.New("text is required"))

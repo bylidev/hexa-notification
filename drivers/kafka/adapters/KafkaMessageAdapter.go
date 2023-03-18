@@ -6,12 +6,13 @@ import (
 )
 
 type KafkaMessageAdapter struct {
+	kmsg *kafka.Message
 }
 
-func NewKafkaMessageAdapter() *KafkaMessageAdapter {
-	return &KafkaMessageAdapter{}
+func NewKafkaMessageAdapter(kmsg *kafka.Message) *KafkaMessageAdapter {
+	return &KafkaMessageAdapter{kmsg: kmsg}
 }
 
-func (s *KafkaMessageAdapter) GetMessage(k *kafka.Message) (*domain.Message, error) {
-	return &domain.Message{Text: string(k.Value)}, nil
+func (s *KafkaMessageAdapter) GetMessage() (*domain.Message, error) {
+	return &domain.Message{Text: string(s.kmsg.Value)}, nil
 }

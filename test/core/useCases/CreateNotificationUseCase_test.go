@@ -10,16 +10,24 @@ import (
 	"github.com/igloar96/hexa-notification/core/useCases"
 )
 
-type MockNotifier struct {
+type MockNotifierAdapter struct {
 	ErrorMsg string
 }
 
-func (n *MockNotifier) Notificate(message *domain.Message) (*domain.Notification, error) {
+func (n *MockNotifierAdapter) Notificate(message *domain.Message) (*domain.Notification, error) {
 	if n.ErrorMsg != "" {
 		return nil, errors.New(n.ErrorMsg)
 	}
 	return &domain.Notification{
 		SendedAt: time.Now(), Details: make([]byte, 0)}, nil
+}
+
+type MockMessageAdapter struct {
+	Text string
+}
+
+func (n *MockMessageAdapter) GetMessage() (*domain.Message, error) {
+	return &domain.Message{Text: n.Text}, nil
 }
 
 func TestCreateNotification(t *testing.T) {
@@ -34,53 +42,49 @@ func TestCreateNotificationExcecute(t *testing.T) {
 	t.Run("TestCreateNotificationExcecute_1", func(t *testing.T) {
 		t.Log("Expected to adapt Message request body correctly.")
 		//arrange
-		msg := &domain.Message{Text: "Hi"}
+		msg := &MockMessageAdapter{Text: "byli.dev !"}
 		var notificationOutputPort []ports.NotificationDrivenAdapter
-		notificationOutputPort = append(notificationOutputPort, &MockNotifier{})
+		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
 		err := useCase.Excecute(msg)
 		//assert
 
-		if err != nil {
+		if len(err) >= 1 {
 			t.Errorf("Expected to adapt Message request body correctly but got error: %s", err)
 		}
 	})
 	t.Run("TestCreateNotificationExcecute_2", func(t *testing.T) {
 		t.Log("Expected to return error if Message text is empty.")
 		//arrange
-		msg := &domain.Message{Text: ""}
+		msg := &MockMessageAdapter{Text: ""}
 		var notificationOutputPort []ports.NotificationDrivenAdapter
-		notificationOutputPort = append(notificationOutputPort, &MockNotifier{})
+		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
 		e := useCase.Excecute(msg)
 		//assert
-		for _, err := range e {
-			if err == nil || err.Error() != "text is required" {
-				t.Errorf("Expected to return error if Message text is empty.")
-			}
+		if len(e) == 0 || e[0].Error() != "text is required" {
+			t.Errorf("Expected to return error if Message text is empty.")
 		}
 
 	})
 	t.Run("TestCreateNotificationExcecute_3", func(t *testing.T) {
 		t.Log("Expected to return error if output adapter has an error.")
 		//arrange
-		msg := &domain.Message{Text: "hi !"}
+		msg := &MockMessageAdapter{Text: "byli.dev!"}
 		var notificationOutputPort []ports.NotificationDrivenAdapter
-		mock := &MockNotifier{ErrorMsg: "Error inesperado"}
+		mock := &MockNotifierAdapter{ErrorMsg: "Error inesperado"}
 		notificationOutputPort = append(notificationOutputPort, mock)
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
 		e := useCase.Excecute(msg)
 		//assert
-		for _, err := range e {
-			if err == nil || err.Error() != mock.ErrorMsg {
-				t.Errorf("Expected to return error if Message text is empty.")
-			}
+		if len(e) == 0 || e[0].Error() != mock.ErrorMsg {
+			t.Errorf("Expected to return error if Message text is empty.")
 		}
 
 	})

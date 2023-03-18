@@ -46,8 +46,7 @@ func (s *KafkaDriver) Excecute() {
 			continue
 		}
 
-		msg, err := adapters.NewKafkaMessageAdapter().GetMessage(&message)
-		s.createNotificationUseCase.Excecute(msg)
+		s.createNotificationUseCase.Excecute(adapters.NewKafkaMessageAdapter(&message))
 		if err != nil {
 			fmt.Print("Error addapting kafka message")
 		}

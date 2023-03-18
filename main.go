@@ -6,11 +6,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/igloar96/hexa-notification/core/domain"
 	"github.com/igloar96/hexa-notification/core/ports"
 	useCases "github.com/igloar96/hexa-notification/core/useCases"
 	"github.com/igloar96/hexa-notification/driven"
 	"github.com/igloar96/hexa-notification/drivers/gin"
+	greeting "github.com/igloar96/hexa-notification/drivers/greeting/adapters"
+
 	"github.com/igloar96/hexa-notification/drivers/kafka"
 )
 
@@ -49,9 +50,6 @@ func main() {
 	}()
 
 	//Greeting
-	createNotificationUseCase.Excecute(&domain.Message{
-		Text: fmt.Sprintf("Hello! I woke up at %s on %s. You can trigger me via http api on port: %d", time.Now().Format("3:04 PM"), time.Now().Format("January 2, 2006"), *HTTP_SERVER_PORT),
-	})
-
+	createNotificationUseCase.Excecute(greeting.NewGreetingMessageAdapter(fmt.Sprintf("Hello! I woke up at %s on %s. You can trigger me via http api on port: %d", time.Now().Format("3:04 PM"), time.Now().Format("January 2, 2006"), *HTTP_SERVER_PORT)))
 	wg.Wait()
 }
