@@ -4,24 +4,32 @@ import (
 	"errors"
 
 	domain "github.com/igloar96/hexa-notification/core/domain"
-	outputPort "github.com/igloar96/hexa-notification/core/ports/outbound"
+	outputPort "github.com/igloar96/hexa-notification/core/ports"
 )
 
 type CreateNotification struct {
-	notificationAdapter outputPort.NotificationAdapter
+	notificationAdapterList *[]outputPort.NotificationDrivenAdapter
 }
 
-func NewCreateNotification(outboundAdapter outputPort.NotificationAdapter) *CreateNotification {
+func NewCreateNotification(outboundAdapters *[]outputPort.NotificationDrivenAdapter) *CreateNotification {
 	return &CreateNotification{
-		notificationAdapter: outboundAdapter,
+		notificationAdapterList: outboundAdapters,
 	}
 }
 
-func (s *CreateNotification) Excecute(message *domain.Message) error {
-	if message.Text == "" {
-		return errors.New("text is required")
-	}
-	_, err := s.notificationAdapter.Notificate(message)
+func (s *CreateNotification) Excecute(message *domain.Message) []error {
+	var errList []error
 
-	return err
+	if message.Text == "" {
+		return append(errList, errors.New("text is required"))
+	}
+
+	for _, adapter := range *s.notificationAdapterList {
+		_, err := adapter.Notificate(message)
+		if err != nil {
+			errList = append(errList, err)
+		}
+	}
+
+	return errList
 }

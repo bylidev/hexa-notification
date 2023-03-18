@@ -1,4 +1,4 @@
-package drivers
+package kafka
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/igloar96/hexa-notification/core/useCases"
+	"github.com/igloar96/hexa-notification/drivers/kafka/adapters"
 	"github.com/segmentio/kafka-go"
 )
 
@@ -44,6 +45,11 @@ func (s *KafkaDriver) Excecute() {
 			log.Printf("Error while reading message: %v", err)
 			continue
 		}
-		fmt.Printf("Received message: key=%s value=%s\n", string(message.Key), string(message.Value))
+
+		msg, err := adapters.NewKafkaMessageAdapter().GetMessage(&message)
+		s.createNotificationUseCase.Excecute(msg)
+		if err != nil {
+			fmt.Print("Error addapting kafka message")
+		}
 	}
 }
