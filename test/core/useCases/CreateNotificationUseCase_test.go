@@ -37,51 +37,51 @@ func TestCreateNotification(t *testing.T) {
 	})
 }
 
-func TestCreateNotificationExcecute(t *testing.T) {
+func TestCreateNotificationExecute(t *testing.T) {
 
-	t.Run("TestCreateNotificationExcecute_1", func(t *testing.T) {
+	t.Run("TestCreateNotificationExecute_1", func(t *testing.T) {
 		t.Log("Expected to adapt Message request body correctly.")
 		//arrange
 		msg := &MockMessageAdapter{Text: "byli.dev !"}
-		var notificationOutputPort []ports.NotificationDrivenAdapter
+		var notificationOutputPort []ports.OutputPort
 		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
-		err := useCase.Excecute(msg)
+		err := useCase.Execute(msg)
 		//assert
 
 		if len(err) >= 1 {
 			t.Errorf("Expected to adapt Message request body correctly but got error: %s", err)
 		}
 	})
-	t.Run("TestCreateNotificationExcecute_2", func(t *testing.T) {
+	t.Run("TestCreateNotificationExecute_2", func(t *testing.T) {
 		t.Log("Expected to return error if Message text is empty.")
 		//arrange
 		msg := &MockMessageAdapter{Text: ""}
-		var notificationOutputPort []ports.NotificationDrivenAdapter
+		var notificationOutputPort []ports.OutputPort
 		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
-		e := useCase.Excecute(msg)
+		e := useCase.Execute(msg)
 		//assert
 		if len(e) == 0 || e[0].Error() != "text is required" {
 			t.Errorf("Expected to return error if Message text is empty.")
 		}
 
 	})
-	t.Run("TestCreateNotificationExcecute_3", func(t *testing.T) {
+	t.Run("TestCreateNotificationExecute_3", func(t *testing.T) {
 		t.Log("Expected to return error if output adapter has an error.")
 		//arrange
 		msg := &MockMessageAdapter{Text: "byli.dev!"}
-		var notificationOutputPort []ports.NotificationDrivenAdapter
+		var notificationOutputPort []ports.OutputPort
 		mock := &MockNotifierAdapter{ErrorMsg: "Error inesperado"}
 		notificationOutputPort = append(notificationOutputPort, mock)
 		useCase := useCases.NewCreateNotification(&notificationOutputPort)
 
 		//act
-		e := useCase.Excecute(msg)
+		e := useCase.Execute(msg)
 		//assert
 		if len(e) == 0 || e[0].Error() != mock.ErrorMsg {
 			t.Errorf("Expected to return error if Message text is empty.")

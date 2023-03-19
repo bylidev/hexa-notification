@@ -22,7 +22,7 @@ func NewKafkaDriver(host string, port uint16, topic string, createNotificationUs
 	return &KafkaDriver{host: host, port: port, topic: topic, createNotificationUseCase: *createNotificationUseCase}
 }
 
-func (s *KafkaDriver) Excecute() {
+func (s *KafkaDriver) Execute() {
 	brokerAddresses := []string{fmt.Sprintf("%s:%d", s.host, s.port)}
 	topic := s.topic
 	partition := 0
@@ -46,7 +46,7 @@ func (s *KafkaDriver) Excecute() {
 			continue
 		}
 
-		s.createNotificationUseCase.Excecute(adapters.NewKafkaMessageAdapter(&message))
+		s.createNotificationUseCase.Execute(adapters.NewKafkaMessageAdapter(&message))
 		if err != nil {
 			fmt.Print("Error addapting kafka message")
 		}

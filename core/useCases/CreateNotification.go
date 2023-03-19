@@ -9,16 +9,16 @@ import (
 )
 
 type CreateNotification struct {
-	notificationAdapterList *[]outputPort.NotificationDrivenAdapter
+	notificationAdapterList *[]outputPort.OutputPort
 }
 
-func NewCreateNotification(outboundAdapters *[]outputPort.NotificationDrivenAdapter) *CreateNotification {
+func NewCreateNotification(outboundAdapters *[]outputPort.OutputPort) *CreateNotification {
 	return &CreateNotification{
 		notificationAdapterList: outboundAdapters,
 	}
 }
 
-func (s *CreateNotification) Excecute(driver ports.NotificationDriverAdapter) []error {
+func (s *CreateNotification) Execute(driver ports.InputPort) []error {
 	var errList []error
 	message, err := driver.GetMessage()
 	if err != nil {

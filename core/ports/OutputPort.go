@@ -4,6 +4,6 @@ import (
 	"github.com/igloar96/hexa-notification/core/domain"
 )
 
-type NotificationDrivenAdapter interface {
+type OutputPort interface {
 	Notificate(message *domain.Message) (*domain.Notification, error)
 }

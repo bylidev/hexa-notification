@@ -15,5 +15,5 @@ func NewNotificationHandler(createNotificationUseCase *useCases.CreateNotificati
 }
 
 func (s *NotificationHandler) Create(ctx *gin.Context) {
-	s.createNotificationUseCase.Excecute(adapters.NewGinContextAdapter(ctx))
+	s.createNotificationUseCase.Execute(adapters.NewGinContextAdapter(ctx))
 }

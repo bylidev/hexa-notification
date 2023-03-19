@@ -18,7 +18,7 @@ func NewGinDriver(host string, port uint16, createNotificationUseCase *useCases.
 	return &GinDriver{host: host, port: port, createNotificationUseCase: *createNotificationUseCase}
 }
 
-func (s *GinDriver) Excecute() {
+func (s *GinDriver) Execute() {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.POST("/", handlers.NewNotificationHandler(&s.createNotificationUseCase).Create)
