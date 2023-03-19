@@ -11,10 +11,10 @@ import (
 type GinDriver struct {
 	host                      string
 	port                      uint16
-	createNotificationUseCase useCases.CreateNotificationUseCase
+	createNotificationUseCase useCases.UseCase
 }
 
-func NewGinDriver(host string, port uint16, createNotificationUseCase *useCases.CreateNotificationUseCase) *GinDriver {
+func NewGinDriver(host string, port uint16, createNotificationUseCase *useCases.UseCase) *GinDriver {
 	return &GinDriver{host: host, port: port, createNotificationUseCase: *createNotificationUseCase}
 }
 

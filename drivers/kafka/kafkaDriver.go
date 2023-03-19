@@ -15,10 +15,10 @@ type KafkaDriver struct {
 	host                      string
 	port                      uint16
 	topic                     string
-	createNotificationUseCase useCases.CreateNotificationUseCase
+	createNotificationUseCase useCases.UseCase
 }
 
-func NewKafkaDriver(host string, port uint16, topic string, createNotificationUseCase *useCases.CreateNotificationUseCase) *KafkaDriver {
+func NewKafkaDriver(host string, port uint16, topic string, createNotificationUseCase *useCases.UseCase) *KafkaDriver {
 	return &KafkaDriver{host: host, port: port, topic: topic, createNotificationUseCase: *createNotificationUseCase}
 }
 

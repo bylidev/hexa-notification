@@ -43,7 +43,7 @@ func main() {
 	/*
 		USE-CASES
 	*/
-	var createNotificationUseCase useCases.CreateNotificationUseCase = useCases.NewCreateNotification(&outputPorts)
+	var createNotificationUseCase useCases.UseCase = useCases.NewCreateNotification(&outputPorts)
 	createNotificationUseCase.Execute(greeting.NewGreetingMessageAdapter(fmt.Sprintf("Hello! I woke up at %s on %s. You can trigger me via http api on port: %d", time.Now().Format("3:04 PM"), time.Now().Format("January 2, 2006"), *HTTP_SERVER_PORT)))
 
 	/*

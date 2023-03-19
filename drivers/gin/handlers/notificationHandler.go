@@ -7,10 +7,10 @@ import (
 )
 
 type NotificationHandler struct {
-	createNotificationUseCase useCases.CreateNotificationUseCase
+	createNotificationUseCase useCases.UseCase
 }
 
-func NewNotificationHandler(createNotificationUseCase *useCases.CreateNotificationUseCase) *NotificationHandler {
+func NewNotificationHandler(createNotificationUseCase *useCases.UseCase) *NotificationHandler {
 	return &NotificationHandler{createNotificationUseCase: *createNotificationUseCase}
 }
 

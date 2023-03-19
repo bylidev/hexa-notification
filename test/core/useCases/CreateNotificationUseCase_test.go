@@ -33,7 +33,7 @@ func (n *MockMessageAdapter) GetMessage() (*domain.Message, error) {
 func TestCreateNotification(t *testing.T) {
 	t.Run("CreateNotification", func(t *testing.T) {
 		t.Log("CreateNotification expected to implements CreateNotificationUseCase")
-		var _ useCases.CreateNotificationUseCase = (*useCases.CreateNotification)(nil)
+		var _ useCases.UseCase = (*useCases.CreateNotification)(nil)
 	})
 }
 
