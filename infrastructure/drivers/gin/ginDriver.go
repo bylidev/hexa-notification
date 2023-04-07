@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/igloar96/hexa-notification/core/useCases"
-	"github.com/igloar96/hexa-notification/drivers/gin/handlers"
+	"github.com/igloar96/hexa-notification/infrastructure/drivers/gin/handlers"
 )
 
 type GinDriver struct {

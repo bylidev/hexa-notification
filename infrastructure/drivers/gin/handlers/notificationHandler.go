@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	useCases "github.com/igloar96/hexa-notification/core/useCases"
-	"github.com/igloar96/hexa-notification/drivers/gin/adapters"
+	"github.com/igloar96/hexa-notification/infrastructure/drivers/gin/adapters"
 )
 
 type NotificationHandler struct {

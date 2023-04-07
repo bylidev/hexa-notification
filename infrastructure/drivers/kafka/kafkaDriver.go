@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/igloar96/hexa-notification/core/useCases"
-	"github.com/igloar96/hexa-notification/drivers/kafka/adapters"
+	"github.com/igloar96/hexa-notification/infrastructure/drivers/kafka/adapters"
 	"github.com/segmentio/kafka-go"
 )
 

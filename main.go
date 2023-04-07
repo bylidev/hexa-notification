@@ -8,11 +8,11 @@ import (
 
 	"github.com/igloar96/hexa-notification/core/ports"
 	useCases "github.com/igloar96/hexa-notification/core/useCases"
-	"github.com/igloar96/hexa-notification/driven"
-	"github.com/igloar96/hexa-notification/drivers/gin"
-	greeting "github.com/igloar96/hexa-notification/drivers/greeting/adapters"
+	"github.com/igloar96/hexa-notification/infrastructure/driven"
+	"github.com/igloar96/hexa-notification/infrastructure/drivers/gin"
+	greeting "github.com/igloar96/hexa-notification/infrastructure/drivers/greeting/adapters"
 
-	"github.com/igloar96/hexa-notification/drivers/kafka"
+	"github.com/igloar96/hexa-notification/infrastructure/drivers/kafka"
 )
 
 var (

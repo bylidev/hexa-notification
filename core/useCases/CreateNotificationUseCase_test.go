@@ -1,4 +1,4 @@
-package test
+package useCases
 
 import (
 	"errors"
@@ -7,7 +7,6 @@ import (
 
 	"github.com/igloar96/hexa-notification/core/domain"
 	"github.com/igloar96/hexa-notification/core/ports"
-	"github.com/igloar96/hexa-notification/core/useCases"
 )
 
 type MockNotifierAdapter struct {
@@ -33,7 +32,7 @@ func (n *MockMessageAdapter) GetMessage() (*domain.Message, error) {
 func TestCreateNotification(t *testing.T) {
 	t.Run("CreateNotification", func(t *testing.T) {
 		t.Log("CreateNotification expected to implements CreateNotificationUseCase")
-		var _ useCases.UseCase = (*useCases.CreateNotification)(nil)
+		var _ UseCase = (*CreateNotification)(nil)
 	})
 }
 
@@ -45,7 +44,7 @@ func TestCreateNotificationExecute(t *testing.T) {
 		msg := &MockMessageAdapter{Text: "byli.dev !"}
 		var notificationOutputPort []ports.OutputPort
 		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
-		useCase := useCases.NewCreateNotification(&notificationOutputPort)
+		useCase := NewCreateNotification(&notificationOutputPort)
 
 		//act
 		err := useCase.Execute(msg)
@@ -61,7 +60,7 @@ func TestCreateNotificationExecute(t *testing.T) {
 		msg := &MockMessageAdapter{Text: ""}
 		var notificationOutputPort []ports.OutputPort
 		notificationOutputPort = append(notificationOutputPort, &MockNotifierAdapter{})
-		useCase := useCases.NewCreateNotification(&notificationOutputPort)
+		useCase := NewCreateNotification(&notificationOutputPort)
 
 		//act
 		e := useCase.Execute(msg)
@@ -78,7 +77,7 @@ func TestCreateNotificationExecute(t *testing.T) {
 		var notificationOutputPort []ports.OutputPort
 		mock := &MockNotifierAdapter{ErrorMsg: "Error inesperado"}
 		notificationOutputPort = append(notificationOutputPort, mock)
-		useCase := useCases.NewCreateNotification(&notificationOutputPort)
+		useCase := NewCreateNotification(&notificationOutputPort)
 
 		//act
 		e := useCase.Execute(msg)
